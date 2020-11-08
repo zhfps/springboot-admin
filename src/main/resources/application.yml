@@ -1,0 +1,27 @@
+server:
+  port: 8080
+spring:
+  datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/yunxi?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    password: password
+    username: root
+  thymeleaf:
+    cache: false
+  mvc:
+    converters:
+      preferred-json-mapper: gson
+    throw-exception-if-no-handler-found: true
+  resources:
+    add-mappings: false
+#文件访问路径
+#    static-path-pattern: /file/**
+#  resources:
+#文件映射的本地路径
+#    static-locations: file:D:/uploadPath/
+
+#  Gson配置项
+#  gson:
+#    date-format: yyyy-MM-dd HH:mm:ss
+#    disable-html-escaping: on
+#    serialize-nulls: on
