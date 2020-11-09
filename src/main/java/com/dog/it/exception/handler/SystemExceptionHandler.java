@@ -17,7 +17,7 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerServletException(ServletException e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR.PERMISSION_TOKEN_ERROE);
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.NO_MAPPING);
         return result;
     }
 
@@ -25,7 +25,7 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerException(Exception e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR.PERMISSION_TOKEN_ERROE);
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR);
         return result;
     }
 }

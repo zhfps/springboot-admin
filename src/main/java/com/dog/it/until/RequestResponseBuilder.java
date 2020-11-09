@@ -21,7 +21,8 @@ public class RequestResponseBuilder {
         result.setData(t);
         result.setMsg(code.getMsg());
         return result;
-    }  //失败，返回失败信息
+    }
+    //失败，返回失败信息
     public static <T> RequestResponse<T> error(RequestResponseCode code){
         RequestResponse<T> result = new RequestResponse<T>();
         result.setCode(code.getCode());
