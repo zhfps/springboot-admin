@@ -1,5 +1,6 @@
 package com.dog.it.exception.handler;
 
+import com.dog.it.exception.exceptions.FriendlyException;
 import com.dog.it.until.RequestResponse;
 import com.dog.it.until.RequestResponseBuilder;
 import com.dog.it.until.RequestResponseCode;
@@ -17,7 +18,15 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerServletException(ServletException e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.NO_MAPPING);
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.NO_MAPPING, e.getStackTrace());
+        return result;
+    }
+
+    @ExceptionHandler(value = { FriendlyException.class })
+    @ResponseBody
+    public RequestResponse<String> handlerException(FriendlyException e){
+        log.error(e.getMessage());
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR, e.getStackTrace());
         return result;
     }
 
@@ -25,7 +34,7 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerException(Exception e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR);
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR,e.getStackTrace());
         return result;
     }
 }

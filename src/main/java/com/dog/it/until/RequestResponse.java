@@ -13,4 +13,5 @@ public class RequestResponse<T> {
     private int code;
     private String msg;
     private T data;// 数据
+    private StackTraceElement[] error;//错误详情
 }

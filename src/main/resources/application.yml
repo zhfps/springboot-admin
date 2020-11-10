@@ -3,7 +3,7 @@ server:
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/yunxi?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
+    url: jdbc:mysql://127.0.0.1:3306/sys?useUnicode=true&characterEncoding=utf8&useSSL=false&serverTimezone=UTC
     password: password
     username: root
   thymeleaf:
@@ -25,3 +25,7 @@ spring:
 #    date-format: yyyy-MM-dd HH:mm:ss
 #    disable-html-escaping: on
 #    serialize-nulls: on
+#mybatis集成
+mybatis:
+  config-location: classpath:mybatis/mybatis-config.xml
+  mapper-locations: classpath:mapper/**/*.xml
