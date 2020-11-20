@@ -15,7 +15,7 @@ public class RequestResponseBuilder {
     }
 
     //失败，返回失败信息
-    public static <T> RequestResponse<T> error(T t, RequestResponseCode code,StackTraceElement[] error){
+    public static <T> RequestResponse<T> error(T t, RequestResponseCode code, String error){
         RequestResponse<T> result = new RequestResponse<T>();
         result.setCode(code.getCode());
         result.setData(t);

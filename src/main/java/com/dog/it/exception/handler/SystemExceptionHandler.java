@@ -18,7 +18,7 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerServletException(ServletException e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.NO_MAPPING, e.getStackTrace());
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.NO_MAPPING, e.getClass().getName());
         return result;
     }
 
@@ -26,7 +26,7 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerException(FriendlyException e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR, e.getStackTrace());
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR, e.getClass().getName());
         return result;
     }
 
@@ -34,7 +34,7 @@ public class SystemExceptionHandler {
     @ResponseBody
     public RequestResponse<String> handlerException(Exception e){
         log.error(e.getMessage());
-        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR,e.getStackTrace());
+        RequestResponse<String> result= RequestResponseBuilder.error(e.getMessage(), RequestResponseCode.ERROR,e.getClass().getName());
         return result;
     }
 }

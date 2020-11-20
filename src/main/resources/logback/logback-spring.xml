@@ -7,7 +7,7 @@
     <!--只在控制台输出日志组件-->
     <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
         <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <pattern>%highlight(%d{yyyy-MM-dd HH:mm}) %boldYellow([%thread]) %-5level  %boldCyan([%logger{50}[%L]]) %msg%n</pattern>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{20} - [%method,%line] - %msg%n</pattern>
             <charset>UTF-8</charset>
         </encoder>
     </appender>
@@ -56,9 +56,9 @@
     <!--druid慢查询日志输出，没有使用druid监控的去掉这部分以及下面的一个相关logger-->
     <appender name="Druid_FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
         <!-- 正在记录的日志文件的路径及文件名 -->
-        <file>${LOG_HOME}/log_druid.log</file>
+        <file>${LOG_HOME}/druid.log</file>
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <fileNamePattern>${LOG_PATH}/${APPDIR}/info/log-druid-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
+            <fileNamePattern>${LOG_HOME}/info/log-druid-%d{yyyy-MM-dd}.%i.log</fileNamePattern>
             <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
                 <maxFileSize>2MB</maxFileSize>
             </timeBasedFileNamingAndTriggeringPolicy>
@@ -94,7 +94,6 @@
     <!--顶级logger-->
     <root level="INFO">
         <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE_INFO" />
         <appender-ref ref="FILE_ERROR" />
     </root>
 

@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.dog.it.dao.SysUserDao">
+
+    <resultMap type="com.dog.it.entity.SysUser" id="SysUserMap">
+        <result property="Id" column="id" jdbcType="INTEGER"/>
+        <result property="UserName" column="UserName" jdbcType="VARCHAR"/>
+        <result property="NickName" column="NickName" jdbcType="VARCHAR"/>
+        <result property="Password" column="Password" jdbcType="VARCHAR"/>
+    </resultMap>
+
+    <!--查询单个-->
+    <select id="queryById" resultMap="SysUserMap">
+        select
+          id, UserName, NickName, Password
+        from sys_user
+        where id = #{id}
+    </select>
+
+    <!--查询单个-->
+    <select id="getUserPermissions" resultType="java.lang.String">
+        select distinct name from sys_permission
+            where id in (select permission_id from sys_role_permission
+                where role_id in (select role_id from sys_user_role
+                    where sys_user_role.user_id = #{id}))
+    </select>
+
+</mapper>
