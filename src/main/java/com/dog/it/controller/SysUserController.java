@@ -5,6 +5,8 @@ import com.dog.it.service.SysUserService;
 import com.dog.it.until.RequestResponse;
 import com.dog.it.until.RequestResponseBuilder;
 import com.dog.it.until.RequestResponseCode;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -12,7 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.annotation.Resource;
 import java.util.List;
-
+@Api(tags = "用户相关接口")
 @RestController
 @RequestMapping("/api/user")
 public class SysUserController {
@@ -28,13 +30,16 @@ public class SysUserController {
      * @param id 主键
      * @return 单条数据
      */
+    @ApiOperation(value = "获取用户")
     @GetMapping("/get/{id}")
     public RequestResponse<SysUser> getSysUserById(@PathVariable("id") int id) {
         RequestResponse<SysUser> result = RequestResponseBuilder.success(this.sysUserService.queryById(id), RequestResponseCode.SUCCESS);
         return result;
     }
+
+    @ApiOperation(value = "获取用户权限")
     @GetMapping("/getPermissions/{id}")
-    public RequestResponse<List<String>> getUserPermisions(@PathVariable("id") int id) {
+    public RequestResponse<List<String>> getUserPermissions(@PathVariable("id") int id) {
         RequestResponse<List<String>> result = RequestResponseBuilder.success(this.sysUserService.getUserPermissions(id), RequestResponseCode.SUCCESS);
         return result;
     }
