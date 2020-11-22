@@ -20,6 +20,7 @@ public interface SysUserService {
      */
     SysUser queryById(int id);
 
+    SysUser queryByName(String UserName);
 
     List<String> getUserPermissions(int id);
 

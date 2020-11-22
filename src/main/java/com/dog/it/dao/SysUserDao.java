@@ -17,6 +17,8 @@ public interface SysUserDao {
 
     SysUser queryById(int id);
 
+    SysUser queryByName(String UserName);
+
     List<String> getUserPermissions(int id);
 
 }

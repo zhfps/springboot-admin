@@ -18,6 +18,14 @@
     </select>
 
     <!--查询单个-->
+    <select id="queryByName" resultMap="SysUserMap">
+        select
+          id, UserName, NickName, Password
+        from sys_user
+        where UserName = #{UserName}
+    </select>
+
+    <!--查询单个-->
     <select id="getUserPermissions" resultType="java.lang.String">
         select distinct name from sys_permission
             where id in (select permission_id from sys_role_permission

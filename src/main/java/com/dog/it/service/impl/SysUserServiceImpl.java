@@ -1,11 +1,17 @@
 package com.dog.it.service.impl;
 
 import com.dog.it.dao.SysUserDao;
+import com.dog.it.entity.LoginUser;
 import com.dog.it.entity.SysUser;
 import com.dog.it.service.SysUserService;
+import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -15,7 +21,7 @@ import java.util.List;
  * @since 2020-11-20 20:55:26
  */
 @Service("sysUserService")
-public class SysUserServiceImpl implements SysUserService {
+public class SysUserServiceImpl implements SysUserService, UserDetailsService {
     @Resource
     private SysUserDao sysUserDao;
 
@@ -31,8 +37,26 @@ public class SysUserServiceImpl implements SysUserService {
     }
 
     @Override
+    public SysUser queryByName(String UserName) {
+        return this.sysUserDao.queryByName(UserName);
+    }
+
+    @Override
     public List<String> getUserPermissions(int id) {
         return this.sysUserDao.getUserPermissions(id);
     }
 
+    @Override
+    public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+
+        SysUser user = this.sysUserDao.queryByName(username);
+
+        LoginUser loginUser = new LoginUser();
+
+        loginUser.setPermissions(this.sysUserDao.getUserPermissions(user.getId()));
+
+        BeanUtils.copyProperties(user, loginUser);
+
+        return loginUser;
+    }
 }
