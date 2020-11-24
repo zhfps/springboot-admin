@@ -20,6 +20,8 @@ public class LoginUser implements UserDetails {
 
     private String Password;
 
+    private String Token;
+
     private List<String> Permissions;
 
     @Override
@@ -80,5 +82,13 @@ public class LoginUser implements UserDetails {
 
     public void setPermissions(List<String> permissions) {
         Permissions = permissions;
+    }
+
+    public String getToken() {
+        return Token;
+    }
+
+    public void setToken(String token) {
+        Token = token;
     }
 }

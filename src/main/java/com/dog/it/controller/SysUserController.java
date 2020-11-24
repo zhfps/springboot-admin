@@ -22,7 +22,7 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 @Api(tags = "用户相关接口")
 @RestController
-@RequestMapping("/api/user")
+@RequestMapping
 public class SysUserController {
 
     @Resource
@@ -40,21 +40,21 @@ public class SysUserController {
      * @return 单条数据
      */
     @ApiOperation(value = "获取用户")
-    @GetMapping("/get/{id}")
+    @GetMapping("/api/user/get/{id}")
     public RequestResponse<SysUser> getSysUserById(@PathVariable("id") int id) {
         RequestResponse<SysUser> result = RequestResponseBuilder.success(this.sysUserService.queryById(id), RequestResponseCode.SUCCESS);
         return result;
     }
 
     @ApiOperation(value = "获取用户权限")
-    @GetMapping("/getPermissions/{id}")
+    @GetMapping("/api/user/getPermissions/{id}")
     public RequestResponse<List<String>> getUserPermissions(@PathVariable("id") int id) {
         RequestResponse<List<String>> result = RequestResponseBuilder.success(this.sysUserService.getUserPermissions(id), RequestResponseCode.SUCCESS);
         return result;
     }
 
     @ApiOperation(value ="登录" )
-    @PostMapping(value = "/api/login")
+    @PostMapping(value = "/login")
     @ResponseBody
     public RequestResponse<Authentication> login(
             @RequestParam(name = "userName",required = true)String userName,
@@ -73,7 +73,7 @@ public class SysUserController {
     }
 
     @ApiOperation(value ="获取当前用户信息" )
-    @GetMapping(value = "/api/info")
+    @GetMapping(value = "/api/user/info")
     @ResponseBody
     public RequestResponse<Authentication> Info(){
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();

@@ -4,6 +4,7 @@ import com.dog.it.dao.SysUserDao;
 import com.dog.it.entity.LoginUser;
 import com.dog.it.entity.SysUser;
 import com.dog.it.service.SysUserService;
+import com.dog.it.until.JwtUntil;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
@@ -54,6 +55,8 @@ public class SysUserServiceImpl implements SysUserService, UserDetailsService {
         LoginUser loginUser = new LoginUser();
 
         loginUser.setPermissions(this.sysUserDao.getUserPermissions(user.getId()));
+
+        loginUser.setToken(JwtUntil.issue(user.getUserName(),user.getId()));
 
         BeanUtils.copyProperties(user, loginUser);
 

@@ -1,4 +1,8 @@
 package com.dog.it.config;
+import com.dog.it.filter.AuthAccessDeniedHandler;
+import com.dog.it.filter.AuthFailureHandler;
+import com.dog.it.filter.TokenFilter;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -10,6 +14,7 @@ import org.springframework.security.config.annotation.web.configuration.WebSecur
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import javax.annotation.Resource;
 
@@ -21,7 +26,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
     @Resource
     private UserDetailsService userDetailsService;
 
+    @Resource
+    private AuthAccessDeniedHandler authAccessDeniedHandler;
 
+    @Resource
+    private TokenFilter tokenFilter;
+
+    @Resource
+    private AuthFailureHandler authFailureHandler;
     /**
      * 解决 无法直接注入 AuthenticationManager
      *
@@ -59,14 +71,14 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
                 .csrf().disable()
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.NEVER).and()
                 .authorizeRequests()
-                .anyRequest()
-                .permitAll()
-                .and()
-                .logout()
-                .permitAll()
-                .and()
-                .headers().frameOptions().disable().and()
-                .formLogin().disable()
-                .logout().disable();
+                .antMatchers("/api/**").authenticated().and()
+                .headers().frameOptions().disable();
+        http.logout().disable();
+        // 添加JWT filter
+        http.addFilterBefore(tokenFilter, UsernamePasswordAuthenticationFilter.class);
+        //异常处理
+        // 认证失败处理类
+        http.exceptionHandling().authenticationEntryPoint(authFailureHandler);
+        http.exceptionHandling().accessDeniedHandler(authAccessDeniedHandler);
     }
 }
