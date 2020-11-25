@@ -13,6 +13,7 @@ public class LoginUser implements UserDetails {
 
     public LoginUser() {
     }
+    private int Id;
 
     private String UserName;
 
@@ -90,5 +91,13 @@ public class LoginUser implements UserDetails {
 
     public void setToken(String token) {
         Token = token;
+    }
+
+    public int getId() {
+        return Id;
+    }
+
+    public void setId(int id) {
+        Id = id;
     }
 }

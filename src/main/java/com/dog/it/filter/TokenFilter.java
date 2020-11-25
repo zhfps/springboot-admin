@@ -1,9 +1,11 @@
 package com.dog.it.filter;
 
 import com.auth0.jwt.JWT;
+import com.dog.it.entity.LoginUser;
 import com.dog.it.until.JwtUntil;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,6 +20,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.Date;
+
 @Component("tokenFilter")
 public class TokenFilter extends OncePerRequestFilter {
 
@@ -46,10 +50,21 @@ public class TokenFilter extends OncePerRequestFilter {
         }
         // 5. token 解析
         try {
+
             String userName = JwtUntil.getUserName(token);
-            if(!StringUtils.isEmpty(userName) && SecurityContextHolder.getContext().getAuthentication() == null){
+            Date date = JwtUntil.getExpireDate(token);
+            Date now = new Date(System.currentTimeMillis());
+            long expire = (date.getTime() - now.getTime())/(1000 * 60);
+            if(expire<=3 && expire>0 && SecurityContextHolder.getContext().getAuthentication() != null){
+                Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+                LoginUser loginUser = (LoginUser) authentication.getDetails();
+                loginUser.setToken(JwtUntil.issue(loginUser.getNickName(),loginUser.getId()));
+                UsernamePasswordAuthenticationToken n_authentication = new UsernamePasswordAuthenticationToken(loginUser, null, loginUser.getAuthorities());
+                SecurityContextHolder.getContext().setAuthentication(n_authentication);
+            } else if(!StringUtils.isEmpty(userName) && SecurityContextHolder.getContext().getAuthentication() == null){
                 UserDetails userDetails = this.userDetailsService.loadUserByUsername(userName);
-                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                LoginUser loginUser = (LoginUser)userDetails;
+                UsernamePasswordAuthenticationToken authentication = new UsernamePasswordAuthenticationToken(loginUser, null, userDetails.getAuthorities());
                 SecurityContextHolder.getContext().setAuthentication(authentication);
             }
         } catch (Exception e) {
