@@ -6,6 +6,7 @@ import com.dog.it.entity.SysUser;
 import com.dog.it.service.SysUserService;
 import com.dog.it.until.JwtUntil;
 import org.springframework.beans.BeanUtils;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -32,6 +33,7 @@ public class SysUserServiceImpl implements SysUserService, UserDetailsService {
      * @param id 主键
      * @return 实例对象
      */
+    @Cacheable(value = "user", key = "#id")
     @Override
     public SysUser queryById(int id) {
         return this.sysUserDao.queryById(id);

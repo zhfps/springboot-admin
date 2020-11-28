@@ -3,16 +3,16 @@
 <mapper namespace="com.dog.it.dao.SysUserDao">
 
     <resultMap type="com.dog.it.entity.SysUser" id="SysUserMap">
-        <result property="Id" column="id" jdbcType="INTEGER"/>
-        <result property="UserName" column="UserName" jdbcType="VARCHAR"/>
-        <result property="NickName" column="NickName" jdbcType="VARCHAR"/>
-        <result property="Password" column="Password" jdbcType="VARCHAR"/>
+        <result property="id" column="id" jdbcType="INTEGER"/>
+        <result property="userName" column="userName" jdbcType="VARCHAR"/>
+        <result property="nickName" column="nickName" jdbcType="VARCHAR"/>
+        <result property="password" column="password" jdbcType="VARCHAR"/>
     </resultMap>
 
     <!--查询单个-->
     <select id="queryById" resultMap="SysUserMap">
         select
-          id, UserName, NickName, Password
+          id, userName, nickName, password
         from sys_user
         where id = #{id}
     </select>
@@ -20,9 +20,9 @@
     <!--查询单个-->
     <select id="queryByName" resultMap="SysUserMap">
         select
-          id, UserName, NickName, Password
+          id, userName, nickName, password
         from sys_user
-        where UserName = #{UserName}
+        where userName = #{userName}
     </select>
 
     <!--查询单个-->

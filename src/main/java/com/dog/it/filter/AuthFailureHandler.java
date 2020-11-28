@@ -2,7 +2,7 @@ package com.dog.it.filter;
 import com.dog.it.until.RequestResponse;
 import com.dog.it.until.RequestResponseBuilder;
 import com.dog.it.until.RequestResponseCode;
-import com.google.gson.Gson;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -21,7 +21,7 @@ import java.io.IOException;
 public class AuthFailureHandler implements AuthenticationEntryPoint {
 
     @Autowired
-    private Gson gson;
+    private ObjectMapper objectMapper;
 
     @Override
     public void commence(HttpServletRequest request, HttpServletResponse response, AuthenticationException exception) throws IOException, ServletException {
@@ -51,7 +51,7 @@ public class AuthFailureHandler implements AuthenticationEntryPoint {
             }else{
                 result = RequestResponseBuilder.error(exception.getMessage(), RequestResponseCode.ERROR,exception.getClass().getName());;
             }
-            response.getWriter().write(gson.toJson(result));
+            response.getWriter().write(objectMapper.writeValueAsString(result));
 
     }
 }

@@ -10,6 +10,7 @@ import io.swagger.annotations.Api;
 import io.swagger.annotations.ApiOperation;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -40,7 +41,7 @@ public class SysUserController {
      * @return 单条数据
      */
     @ApiOperation(value = "获取用户")
-    @GetMapping("/api/user/get/{id}")
+    @GetMapping("/user/get/{id}")
     public RequestResponse<SysUser> getSysUserById(@PathVariable("id") int id) {
         RequestResponse<SysUser> result = RequestResponseBuilder.success(this.sysUserService.queryById(id), RequestResponseCode.SUCCESS);
         return result;

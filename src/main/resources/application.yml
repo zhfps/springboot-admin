@@ -1,6 +1,15 @@
 server:
   port: 8080
 spring:
+  redis:
+    database: 0
+    host: 127.0.0.1
+    port: 6379
+    jedis:
+      pool:
+        max-active: 8
+        max-idle: 8
+    timeout: 300
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -59,8 +68,6 @@ spring:
   thymeleaf:
     cache: false
   mvc:
-    converters:
-      preferred-json-mapper: gson
     throw-exception-if-no-handler-found: true
   resources:
     add-mappings: false

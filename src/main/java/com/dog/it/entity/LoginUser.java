@@ -13,33 +13,79 @@ public class LoginUser implements UserDetails {
 
     public LoginUser() {
     }
-    private int Id;
 
-    private String UserName;
+    public int getId() {
+        return id;
+    }
 
-    private String NickName;
+    public void setId(int id) {
+        this.id = id;
+    }
 
-    private String Password;
+    public String getUserName() {
+        return userName;
+    }
 
-    private String Token;
+    public void setUserName(String userName) {
+        this.userName = userName;
+    }
 
-    private List<String> Permissions;
+    public String getNickName() {
+        return nickName;
+    }
+
+    public void setNickName(String nickName) {
+        this.nickName = nickName;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getToken() {
+        return token;
+    }
+
+    public void setToken(String token) {
+        this.token = token;
+    }
+
+    public List<String> getPermissions() {
+        return permissions;
+    }
+
+    public void setPermissions(List<String> permissions) {
+        this.permissions = permissions;
+    }
+
+    private int id;
+
+    private String userName;
+
+    private String nickName;
+
+    private String password;
+
+    private String token;
+
+    private List<String> permissions;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-         return Permissions.parallelStream().filter(p -> !StringUtils.isEmpty(p))
+         return permissions.parallelStream().filter(p -> !StringUtils.isEmpty(p))
                 .map(p -> new SimpleGrantedAuthority(p)).collect(Collectors.toSet());
     }
 
     @Override
     public String getPassword() {
-        return Password;
+        return password;
     }
 
     @Override
     public String getUsername() {
-        return UserName;
+        return userName;
     }
+
 
     @Override
     public boolean isAccountNonExpired() {
@@ -61,43 +107,4 @@ public class LoginUser implements UserDetails {
         return true;
     }
 
-    public void setUserName(String userName) {
-        UserName = userName;
-    }
-
-    public void setPassword(String password) {
-        Password = password;
-    }
-
-    public String getNickName() {
-        return NickName;
-    }
-
-    public void setNickName(String nickName) {
-        NickName = nickName;
-    }
-
-    public List<String> getPermissions() {
-        return Permissions;
-    }
-
-    public void setPermissions(List<String> permissions) {
-        Permissions = permissions;
-    }
-
-    public String getToken() {
-        return Token;
-    }
-
-    public void setToken(String token) {
-        Token = token;
-    }
-
-    public int getId() {
-        return Id;
-    }
-
-    public void setId(int id) {
-        Id = id;
-    }
 }

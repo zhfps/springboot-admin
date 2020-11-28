@@ -11,12 +11,12 @@ import java.io.Serializable;
 public class SysUser implements Serializable {
     private static final long serialVersionUID = -78722816892016393L;
 
-    private int Id;
+    private int id;
 
-    private String UserName;
+    private String userName;
 
-    private String NickName;
+    private String nickName;
 
-    private String Password;
+    private String password;
 
 }
